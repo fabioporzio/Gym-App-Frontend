@@ -9,4 +9,3 @@ export class Exercise {
   weightKg?: number; //punto di domanda per indicare le properietà che possono essere null
   notes?: string;
 }
-

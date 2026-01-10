@@ -1,0 +1,73 @@
+@if (editMode) {
+    <h2> Modalità modifica attiva</h2>
+
+    <h3>Modifica sessione</h3>
+
+    @for (exercise of session().exercises; track $index) {
+        <label>
+            Nome esercizio:
+            <select
+                [(ngModel)]="sessionToEdit.exercises[$index]"
+                [compareWith]="compareExercises">
+
+                @for (storedExercise of exercises; track storedExercise.name) {
+                <option [ngValue]="storedExercise">
+                    {{ storedExercise.name }} ({{ storedExercise.muscleGroup }})
+                </option>
+                }
+            </select>
+        </label>
+
+
+
+        <label>
+            Ripetizioni:
+            <input type="number" [(ngModel)]="sessionToEdit.exercises[$index].reps" placeholder="{{sessionToEdit.exercises[$index].reps}}">
+        </label>
+
+        <label>
+            Serie:
+            <input type="number" [(ngModel)]="sessionToEdit.exercises[$index].sets" placeholder="{{sessionToEdit.exercises[$index].sets}}">
+        </label>
+
+        <label>
+            Peso:
+            <input type="text" [(ngModel)]="sessionToEdit.exercises[$index].weightKg" placeholder="{{sessionToEdit.exercises[$index].weightKg}}">
+        </label>
+
+        <label>
+            Note:
+            <textarea [(ngModel)]="sessionToEdit.exercises[$index].notes" placeholder="{{sessionToEdit.exercises[$index].notes}}"></textarea>
+        </label>
+    }
+
+    <button (click)="saveSession()">Salva</button>
+    <button (click)="exitEditMode()">Annulla</button>
+}
+@else {
+    <div class="session-card">
+        <h2>🏋🏽 Sessione {{ session().id }} 🏋🏽</h2>
+        @for (exercise of session().exercises; track $index) {
+            <div class="exercise-card">
+                <h3>⭐ {{ exercise.name }} ⭐</h3>
+                <p><strong>🎯 Gruppo muscolare:</strong> {{ exercise.muscleGroup }}</p>
+                <p><strong>📊 Serie:</strong> {{ exercise.sets }} | <strong>🔢 Ripetizioni:</strong> {{ exercise.reps }}</p>
+                @if (exercise.weightKg) {
+                <p><strong>💪 Peso (kg):</strong> {{ exercise.weightKg }}</p>
+                }
+                @if (exercise.notes) {
+                <p><strong>📝 Note:</strong> {{ exercise.notes }}</p>
+                }
+            </div>
+        }
+
+        <div class="button-group">
+            <button class="btn-edit" (click)="enterEditMode(session())">
+                ✏️ MODIFICA
+            </button>
+            <button class="btn-delete" (click)="deleteSession(session())">
+                🗑️ ELIMINA
+            </button>
+        </div>
+    </div>
+}

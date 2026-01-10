@@ -1,0 +1,68 @@
+@if (editMode) {
+    <h2> Modalità modifica attiva</h2>
+
+    <h3>Modifica esercizio</h3>
+
+    <label>
+        Nome esercizio:
+        <input type="text" [(ngModel)]="exerciseToEdit.name" placeholder="Scrivi il nome">
+    </label>
+
+    <label>
+        Gruppo Muscolare:
+        <select [(ngModel)]="exerciseToEdit.muscleGroup">
+            <option value="">Scegli il gruppo muscolare</option>
+            <option value="petto">Petto</option>
+            <option value="schiena">Schiena</option>
+            <option value="gambe">Gambe</option>
+            <option value="braccia">Braccia</option>
+            <option value="core">Core</option>
+        </select>
+    </label>
+
+    <label>
+        Ripetizioni:
+        <input type="number" [(ngModel)]="exerciseToEdit.reps" placeholder="Scrivi le ripetizioni">
+    </label>
+
+    <label>
+        Serie:
+        <input type="number" [(ngModel)]="exerciseToEdit.sets" placeholder="Scrivi la serie">
+    </label>
+
+    <label>
+        Peso:
+        <input type="text" [(ngModel)]="exerciseToEdit.weightKg" placeholder="Scrivi il peso">
+    </label>
+
+    <label>
+        Note:
+        <textarea [(ngModel)]="exerciseToEdit.notes" placeholder="Scrivi una note"></textarea>
+    </label>
+
+    <button (click)="saveExercise()">Salva</button>
+    <button (click)="exitEditMode()">Annulla</button>
+}
+@else {
+<div class="exercise-card">
+    <h2>⭐ {{ exercise().name }} ⭐</h2>
+    <p><strong>🎯 Gruppo muscolare:</strong> {{ exercise().muscleGroup }}</p>
+    <p><strong>📊 Serie:</strong> {{ exercise().sets }} | <strong>🔢 Ripetizioni:</strong> {{ exercise().reps }}</p>
+    @if (exercise().weightKg) {
+    <p><strong>💪 Peso (kg):</strong> {{ exercise().weightKg }}</p>
+    }
+    @if (exercise().notes) {
+    <p><strong>📝 Note:</strong> {{ exercise().notes }}</p>
+    }
+    <div class="button-group">
+        <button class="btn-edit" (click)="enterEditMode(exercise())">
+            ✏️ MODIFICA
+        </button>
+        <button class="btn-delete" (click)="deleteExercise(exercise())">
+            🗑️ ELIMINA
+        </button>
+    </div>
+</div>
+}
+
+<router-outlet></router-outlet>

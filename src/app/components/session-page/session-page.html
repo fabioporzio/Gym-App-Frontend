@@ -1,0 +1,93 @@
+<main class="main">
+  <div class="content">
+    <h1>💪 PALESTRA ONLINE - Elenco Esercizi 💪</h1>
+    <marquee behavior="scroll" direction="left">🏋️ Benvenuto nel tuo programma di allenamento! 🏋️</marquee>
+
+    @if (editMode) {
+      <h2> Modalità modifica attiva</h2>
+
+      <h3>Crea sessione di allenamento</h3>
+
+      <label>
+        Nome esercizio:
+        <select [(ngModel)]="exerciseToEdit.name">
+          <option value="">Scegli l'esercizio</option>
+          @for (exercise of exercises; track $index) {
+            <option value="{{exercise.name}}|{{exercise.muscleGroup}}">{{exercise.name}} ({{exercise.muscleGroup}})</option>
+          }
+        </select>
+      </label>
+
+      <label>
+        Ripetizioni:
+        <input type="number" [(ngModel)]="exerciseToEdit.reps" placeholder="Scrivi le ripetizioni">
+      </label>
+
+      <label>
+        Serie:
+        <input type="number" [(ngModel)]="exerciseToEdit.sets" placeholder="Scrivi la serie">
+      </label>
+
+      <label>
+        Peso:
+        <input type="text" [(ngModel)]="exerciseToEdit.weightKg" placeholder="Scrivi il peso">
+      </label>
+
+      <button (click)="addExerciseToSession()">Aggiungi Esercizio</button>
+      <button (click)="saveSession()">Salva Sessione</button>
+      <button (click)="exitEditMode()">Elimina</button>
+
+      @if (sessionToEdit.exercises.length > 0) {
+        <h3>La tua sessione corrente</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Esercizio</th>
+              <th>Gruppo Muscolare</th>
+              <th>Ripetizioni</th>
+              <th>Serie</th>
+              <th>Peso</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (exercise of sessionToEdit.exercises; track $index) {
+              <tr>
+                <th>{{exercise.name}}</th>
+                <th>{{exercise.muscleGroup}}</th>
+                <th>{{exercise.reps}}</th>
+                <th>{{exercise.sets}}</th>
+                <th>{{exercise.weightKg}}</th>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    }
+    @else {
+      <div class="exercise-list">
+        <div class="button-container">
+          <button class="btn-insert" (click)="enterEditMode()">
+            ➕ INSERISCI NUOVA SESSIONE
+          </button>
+        </div>
+
+        <a routerLink="/exercises">VAI AGLI ESERCIZI</a>
+
+        @if (sessions.length > 0) {
+          <h3>Sessioni</h3>
+          @for (session of sessions; track $index) {
+            <app-session-card
+              [session]="session"
+              (deletedSession)="deleteSession($event)"
+              (editedSession)="updateSession($event)"
+            >
+            </app-session-card>
+          }
+        }
+        @else {
+          <h3>Nessuna sessione di allenamento creata</h3>
+        }
+      </div>
+    }
+  </div>
+</main>

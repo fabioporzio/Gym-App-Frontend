@@ -1,0 +1,88 @@
+.exercise-card {
+  background: linear-gradient(135deg, #ffff00 0%, #00ffff 100%);
+  border: 5px ridge #ff00ff;
+  margin: 20px 0;
+  padding: 20px;
+  box-shadow: 8px 8px 0px #000000;
+  position: relative;
+}
+
+.exercise-card::before {
+  content: '🌟';
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 30px;
+  animation: rotate 3s linear infinite;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.exercise-card h2 {
+  color: #0000ff;
+  font-size: 24px;
+  text-shadow: 2px 2px #ffffff;
+  margin-top: 0;
+  text-transform: uppercase;
+}
+
+.exercise-card p {
+  color: #000000;
+  font-size: 16px;
+  margin: 8px 0;
+  font-weight: bold;
+}
+
+.exercise-card strong {
+  color: #ff0000;
+}
+
+.button-group {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.btn-edit,
+.btn-delete {
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: 4px outset #ffffff;
+  cursor: pointer;
+  font-family: 'Comic Sans MS', cursive;
+  text-transform: uppercase;
+  box-shadow: 4px 4px 0px #000000;
+  transition: all 0.2s;
+}
+
+.btn-edit {
+  background: #00ff00;
+  color: #000000;
+}
+
+.btn-edit:hover {
+  background: #00cc00;
+  transform: scale(1.1);
+}
+
+.btn-delete {
+  background: #ff0000;
+  color: #ffffff;
+}
+
+.btn-delete:hover {
+  background: #cc0000;
+  transform: scale(1.1);
+}
+
+.btn-edit:active,
+.btn-delete:active {
+  border-style: inset;
+  transform: translateY(2px);
+  box-shadow: 2px 2px 0px #000000;
+}

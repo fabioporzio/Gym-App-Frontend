@@ -1,0 +1,70 @@
+<main class="main">
+    <div class="content">
+        <h1>💪 PALESTRA ONLINE - Elenco Esercizi 💪</h1>
+        <marquee behavior="scroll" direction="left">🏋️ Benvenuto nel tuo programma di allenamento! 🏋️</marquee>
+
+        @if (editMode) {
+            <h2> Modalità modifica attiva</h2>
+
+            <h3>Modifica esercizio</h3>
+
+            <label>
+                Nome esercizio:
+                <input type="text" [(ngModel)]="exerciseToEdit.name" placeholder="Scrivi il nome">
+            </label>
+
+            <label>
+                Gruppo Muscolare:
+                <select [(ngModel)]="exerciseToEdit.muscleGroup">
+                    <option value="">Scegli il gruppo muscolare</option>
+                    <option value="petto">Petto</option>
+                    <option value="schiena">Schiena</option>
+                    <option value="gambe">Gambe</option>
+                    <option value="braccia">Braccia</option>
+                    <option value="core">Core</option>
+                </select>
+            </label>
+
+            <label>
+                Ripetizioni:
+                <input type="number" [(ngModel)]="exerciseToEdit.reps" placeholder="Scrivi le ripetizioni">
+            </label>
+
+            <label>
+                Serie:
+                <input type="number" [(ngModel)]="exerciseToEdit.sets" placeholder="Scrivi la serie">
+            </label>
+
+            <label>
+                Peso:
+                <input type="text" [(ngModel)]="exerciseToEdit.weightKg" placeholder="Scrivi il peso">
+            </label>
+
+            <label>
+                Note:
+                <textarea [(ngModel)]="exerciseToEdit.notes" placeholder="Scrivi una note"></textarea>
+            </label>
+
+            <button (click)="saveExercise()">Salva</button>
+            <button (click)="exitEditMode()">Annulla</button>
+        }
+        @else {
+            <div class="exercise-list">
+                <div class="button-container">
+                    <button class="btn-insert" (click)="enterEditMode()">
+                        ➕ INSERISCI NUOVO ESERCIZIO
+                    </button>
+                </div>
+
+                <h3>Esercizi</h3>
+                @for (exercise of exercises; track exercise.id) {
+                    <app-exercise-card 
+                        [exercise]="exercise" 
+                        (deletedExercise)="deleteExercise($event)"
+                        (editedExercise)="updateExercise($event)"
+                    ></app-exercise-card>
+                }
+            </div>
+        }
+    </div>
+</main>
