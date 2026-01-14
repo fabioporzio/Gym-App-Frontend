@@ -76,6 +76,7 @@ export class ExercisePage {
 
     localStorage.setItem("exercises", JSON.stringify(this.exercises));
     alert('Esercizio Salvato! ✅');
+    this.editMode = false;
   }
 
   deleteExercise(exercise: Exercise) {
